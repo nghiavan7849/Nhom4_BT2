@@ -1,0 +1,78 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Bb]in/
+[Oo]bj/
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+!**/packages/build/PackageName/
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# User-specific files
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pdb
+*.mdb
+*.opendb
+*.tlog
+*.lastcodeanalysis.xml
+
+# Other files
+*.cache
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.tar
+*.tgz
+*.gz
+*.bz2
+*.xz
+*.dmg
+*.iso
+*.img
+*.apk
+*.appx
+*.appxbundle
+*.msix
+*.msixbundle
+*.vsix
+*.nupkg
+*.snupkg
+*.pdb
+*.mdb
+*.opendb
+*.tlog
+*.lastcodeanalysis.xml
+
+.env
