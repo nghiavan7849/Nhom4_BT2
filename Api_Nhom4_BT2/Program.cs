@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Api_Nhom4_BT2.Models;
 using Api_Nhom4_BT2.DBContext;
+using Api_Nhom4_BT2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy => 
+    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+builder.Services.AddScoped<CourseService>();
 
 var app = builder.Build();
 
