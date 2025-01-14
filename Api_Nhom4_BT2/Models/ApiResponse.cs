@@ -30,5 +30,11 @@ namespace Api_Nhom4_BT2.Models
             return new ApiResponse<T>(1, "fail", default(T)!, description);
         }
 
+        public ApiResponse<T> WithDescription(string description)
+        {
+            this.description = description;
+            return this;
+        }
+
     }
 }

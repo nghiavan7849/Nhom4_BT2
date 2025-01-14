@@ -18,6 +18,7 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
 builder.Services.AddScoped<CourseService>();
+builder.Services.AddScoped<StudentService>();
 
 var app = builder.Build();
 

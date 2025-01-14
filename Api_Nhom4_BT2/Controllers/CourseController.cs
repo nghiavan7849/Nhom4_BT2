@@ -30,5 +30,31 @@ namespace Api_Nhom4_BT2.Controllers
             return Created("", ApiResponse<Course>.success(await _courseService.AddCourse(course))); 
         }
 
+        [HttpPut("{id}")]
+        public IActionResult UpdateCourse(int id, [FromBody] Course updateCourse)
+        {
+            var response = _courseService.UpdateCourse(id, updateCourse);
+
+            if (response.code == 0)
+            {
+                return Ok(response);
+            }
+
+            return NotFound(response);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCourse(int id)
+        {
+            var response = _courseService.DeleteCourse(id);
+
+            if (response.code == 0)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest(response);
+        }
+
     }
 }
