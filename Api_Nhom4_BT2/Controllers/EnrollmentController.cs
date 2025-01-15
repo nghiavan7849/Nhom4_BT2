@@ -25,7 +25,7 @@ namespace Api_Nhom4_BT2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEnrollment([FromBody] EnrollmentRespone enrollment)
+        public async Task<IActionResult> AddEnrollment([FromBody] EnrollmentRequest enrollment)
         {
             var result = await enrollmentService.AddEnrollment(enrollment);
             if (result.code == 1)
@@ -37,7 +37,7 @@ namespace Api_Nhom4_BT2.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEnrollment(int id, [FromBody] EnrollmentRespone enrollmentRespone)
+        public async Task<IActionResult> UpdateEnrollment(int id, [FromBody] EnrollmentRequest enrollmentRespone)
         {
             var result = await enrollmentService.UpdateEnrollment(id, enrollmentRespone);
 

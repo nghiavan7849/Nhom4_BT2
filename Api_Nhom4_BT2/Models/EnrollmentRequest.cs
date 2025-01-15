@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api_Nhom4_BT2.Models
 {
-    public class EnrollmentRespone
+    public class EnrollmentRequest
     {
         public int CourseID { get; set; }
 
