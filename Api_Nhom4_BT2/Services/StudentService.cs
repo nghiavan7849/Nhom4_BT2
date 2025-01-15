@@ -1,5 +1,6 @@
 ﻿using Api_Nhom4_BT2.DBContext;
 using Api_Nhom4_BT2.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api_Nhom4_BT2.Services
 {
@@ -10,6 +11,37 @@ namespace Api_Nhom4_BT2.Services
         public StudentService(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+
+        public async Task<IEnumerable<Student>> GetAll()
+        {
+            var listStudent = await _context.Student.ToListAsync();
+            return listStudent;
+        }
+        public async Task<Student> AddStudent(Student student)
+        {
+            await _context.Student.AddAsync(student);
+            await _context.SaveChangesAsync();
+            return student;
+        }
+
+        public ApiResponse<Student> UpdateStudent(int id, Student updateStudent)
+        {
+            var existingStudent = _context.Student.FirstOrDefault(student => student.ID == id);
+            if (existingStudent == null)
+            {
+                return ApiResponse<Student>.fail("Student not found");
+            }
+
+            existingStudent.LastName = updateStudent.LastName;
+            existingStudent.FirstMidName = updateStudent.FirstMidName;
+            existingStudent.EnrollmentDate = updateStudent.EnrollmentDate;
+
+            _context.SaveChanges();
+
+            return ApiResponse<Student>.success(existingStudent)
+                .WithDescription("Student updated successfully");
         }
 
         public ApiResponse<string> DeleteStudent(int id)
