@@ -31,7 +31,7 @@ namespace Api_Nhom4_BT2.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCourse(int id, [FromBody] Course updateCourse)
+        public IActionResult UpdateCourse(int id, [FromBody] CourseRequest updateCourse)
         {
             var response = _courseService.UpdateCourse(id, updateCourse);
 

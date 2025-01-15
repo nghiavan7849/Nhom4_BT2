@@ -33,7 +33,7 @@ namespace Api_Nhom4_BT2.Services
             return course;
         }
 
-        public ApiResponse<Course> UpdateCourse(int id, Course updateCourse)
+        public ApiResponse<Course> UpdateCourse(int id, CourseRequest updateCourse)
         {
             var existingCourse = _context.Course.FirstOrDefault(course => course.CourseID == id);
             if (existingCourse == null) 
