@@ -25,9 +25,9 @@ namespace Api_Nhom4_BT2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCourse([FromBody] Course course)
+        public async Task<IActionResult> AddCourse([FromBody] CourseRequest courseRequest)
         {
-            return Created("", ApiResponse<Course>.success(await _courseService.AddCourse(course))); 
+            return Created("", ApiResponse<Course>.success(await _courseService.AddCourse(courseRequest))); 
         }
 
         [HttpPut("{id}")]

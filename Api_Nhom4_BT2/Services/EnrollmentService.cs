@@ -27,7 +27,7 @@ namespace Api_Nhom4_BT2.Services
             }
         }
 
-        public async Task<ApiResponse<Enrollment>> AddEnrollment(EnrollmentRespone enrollmentRespone)
+        public async Task<ApiResponse<Enrollment>> AddEnrollment(EnrollmentRequest enrollmentRespone)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace Api_Nhom4_BT2.Services
         }
 
 
-        public async Task<ApiResponse<Enrollment>> UpdateEnrollment(int id, EnrollmentRespone enrollmentRespone)
+        public async Task<ApiResponse<Enrollment>> UpdateEnrollment(int id, EnrollmentRequest enrollmentRespone)
         {
             try
             {

@@ -21,8 +21,12 @@ namespace Api_Nhom4_BT2.Services
             return listCourse;
         }
 
-        public async Task<Course> AddCourse(Course course)
+        public async Task<Course> AddCourse(CourseRequest courseRequest)
         {
+            Course course = new Course();
+            course.Title = courseRequest.Title;
+            course.Credits = courseRequest.Credits;
+
             await _context.Course.AddAsync(course);
             await _context.SaveChangesAsync();
 
