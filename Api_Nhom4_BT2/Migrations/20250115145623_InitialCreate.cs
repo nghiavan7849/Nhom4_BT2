@@ -74,8 +74,7 @@ namespace Api_Nhom4_BT2.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollment_StudentID",
                 table: "Enrollment",
-                column: "StudentID",
-                unique: true);
+                column: "StudentID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

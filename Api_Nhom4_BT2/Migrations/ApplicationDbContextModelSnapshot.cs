@@ -64,8 +64,7 @@ namespace Api_Nhom4_BT2.Migrations
 
                     b.HasIndex("CourseID");
 
-                    b.HasIndex("StudentID")
-                        .IsUnique();
+                    b.HasIndex("StudentID");
 
                     b.ToTable("Enrollment");
                 });
@@ -103,8 +102,8 @@ namespace Api_Nhom4_BT2.Migrations
                         .IsRequired();
 
                     b.HasOne("Api_Nhom4_BT2.Models.Student", "Student")
-                        .WithOne()
-                        .HasForeignKey("Api_Nhom4_BT2.Models.Enrollment", "StudentID")
+                        .WithMany()
+                        .HasForeignKey("StudentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
