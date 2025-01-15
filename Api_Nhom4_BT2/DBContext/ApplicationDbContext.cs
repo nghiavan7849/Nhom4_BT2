@@ -24,8 +24,8 @@ namespace Api_Nhom4_BT2.DBContext
 
             modelBuilder.Entity<Models.Enrollment>()
                 .HasOne(e => e.Student)
-                .WithOne()
-                .HasForeignKey<Models.Enrollment>(e => e.StudentID);
+                .WithMany()
+                .HasForeignKey(e => e.StudentID);
         }
     }
 }
