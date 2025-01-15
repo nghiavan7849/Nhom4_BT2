@@ -19,14 +19,21 @@ namespace Api_Nhom4_BT2.Services
             var listStudent = await _context.Student.ToListAsync();
             return listStudent;
         }
-        public async Task<Student> AddStudent(Student student)
+        public async Task<Student> AddStudent(StudentRequest studentRequest)
         {
+            var student = new Student
+            {
+                LastName = studentRequest.LastName,
+                FirstMidName = studentRequest.FirstMidName,
+                EnrollmentDate = studentRequest.EnrollmentDate
+            };
+
             await _context.Student.AddAsync(student);
             await _context.SaveChangesAsync();
             return student;
         }
 
-        public ApiResponse<Student> UpdateStudent(int id, Student updateStudent)
+        public ApiResponse<Student> UpdateStudent(int id, StudentRequest updateStudentRequest)
         {
             var existingStudent = _context.Student.FirstOrDefault(student => student.ID == id);
             if (existingStudent == null)
@@ -34,16 +41,15 @@ namespace Api_Nhom4_BT2.Services
                 return ApiResponse<Student>.fail("Student not found");
             }
 
-            existingStudent.LastName = updateStudent.LastName;
-            existingStudent.FirstMidName = updateStudent.FirstMidName;
-            existingStudent.EnrollmentDate = updateStudent.EnrollmentDate;
+            existingStudent.LastName = updateStudentRequest.LastName;
+            existingStudent.FirstMidName = updateStudentRequest.FirstMidName;
+            existingStudent.EnrollmentDate = updateStudentRequest.EnrollmentDate;
 
             _context.SaveChanges();
 
             return ApiResponse<Student>.success(existingStudent)
                 .WithDescription("Student updated successfully");
         }
-
         public ApiResponse<string> DeleteStudent(int id)
         {
             var isReferenced = _context.Enrollment.Any(enrollment => enrollment.StudentID == id);
