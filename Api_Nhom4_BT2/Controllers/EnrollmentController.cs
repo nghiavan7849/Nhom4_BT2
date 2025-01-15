@@ -1,6 +1,8 @@
 ﻿using Api_Nhom4_BT2.Models;
 using Api_Nhom4_BT2.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Sprache;
 
 namespace Api_Nhom4_BT2.Controllers
 {
@@ -18,9 +20,9 @@ namespace Api_Nhom4_BT2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-                var listEnrollment = await enrollmentService.GetAllEnrollment();
+            var listEnrollment = await enrollmentService.GetAllEnrollment();
 
-                return Ok(listEnrollment);
+            return Ok(listEnrollment);
 
         }
 
@@ -49,5 +51,17 @@ namespace Api_Nhom4_BT2.Controllers
             return Ok(result);
         }
 
+        // New Delete Method kien
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEnrollment(int id)
+        {
+            var result = await enrollmentService.DeleteEnrollment(id);
+            if (result.code == 1)
+            {
+                return NotFound(result);
+            }
+            // return Ok();
+            return NoContent();
+        }
     }
 }
