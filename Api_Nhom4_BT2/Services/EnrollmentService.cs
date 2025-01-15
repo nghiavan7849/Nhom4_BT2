@@ -31,8 +31,8 @@ namespace Api_Nhom4_BT2.Services
         {
             try
             {
-                if (enrollmentRespone.Grade == null || 
-                    string.IsNullOrWhiteSpace(enrollmentRespone.Grade)) 
+                if (enrollmentRespone.Grade == null ||
+                    string.IsNullOrWhiteSpace(enrollmentRespone.Grade))
                 {
                     return ApiResponse<Enrollment>.fail(null)
                        .WithDescription("Please fill in the information completely");
@@ -47,7 +47,7 @@ namespace Api_Nhom4_BT2.Services
                     return ApiResponse<Enrollment>.fail(null)
                         .WithDescription("Invalid CourseID or StudentID.");
                 }
-               
+
 
                 enrollment.CourseID = enrollmentRespone.CourseID;
                 enrollment.StudentID = enrollmentRespone.StudentID;
@@ -106,7 +106,7 @@ namespace Api_Nhom4_BT2.Services
                 await dbContext.SaveChangesAsync();
 
                 var resultEnrollment = await dbContext.Enrollment.Include(e => e.Course).Include(e => e.Student).FirstOrDefaultAsync(enrollment => enrollment.EnrollmentID == id);
-               
+
                 return ApiResponse<Enrollment>.success(resultEnrollment)
                     .WithDescription("Enrollment updated successfully");
             }
@@ -114,6 +114,30 @@ namespace Api_Nhom4_BT2.Services
             {
                 return ApiResponse<Enrollment>.fail(null)
                     .WithDescription($"Error updating Enrollment: {ex.Message}");
+            }
+        }
+
+
+        public async Task<ApiResponse<Enrollment>> DeleteEnrollment(int id)
+        {
+            try
+            {
+                // var existingEnrollment = await dbContext.Enrollment.Remove(enrollment => enrollment.EnrollmentID == id);
+                var existingEnrollment = await dbContext.Enrollment.FirstOrDefaultAsync(enrollment => enrollment.EnrollmentID == id);
+                if (existingEnrollment == null)
+                {
+                    return ApiResponse<Enrollment>.fail(null).WithDescription("Enrollment not found");
+                }
+
+                dbContext.Enrollment.Remove(existingEnrollment); // Remove the enrollment record
+                await dbContext.SaveChangesAsync(); // Sa
+
+                return ApiResponse<Enrollment>.success(null)
+                    .WithDescription("Enrollment deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<Enrollment>.fail(null).WithDescription($"Error deleting Enrollment: {ex.Message}");
             }
         }
 
