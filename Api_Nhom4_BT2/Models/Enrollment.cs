@@ -11,7 +11,7 @@ namespace Api_Nhom4_BT2.Models
         [ForeignKey("CourseID")]
         public int CourseID { get; set; }
 
-        [ForeignKey("StudentID")]
+        [ForeignKey("ID")]
         public int StudentID { get; set; }
 
         public string Grade { get; set; }
