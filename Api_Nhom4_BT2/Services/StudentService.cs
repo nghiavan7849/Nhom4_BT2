@@ -21,11 +21,22 @@ namespace Api_Nhom4_BT2.Services
         }
         public async Task<Student> AddStudent(StudentRequest studentRequest)
         {
+            DateTime utcNow = DateTime.UtcNow;
+
+            TimeZoneInfo hcmTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Asia/Ho_Chi_Minh");
+
+            // Chuyển đổi thời gian UTC sang múi giờ Asia/Ho_Chi_Minh
+            DateTime dateTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, hcmTimeZone);
+
+            // Đảm bảo giá trị lưu vào PostgreSQL luôn ở UTC
+            DateTime dateTimeToSave = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+
+
             var student = new Student
             {
                 LastName = studentRequest.LastName,
                 FirstMidName = studentRequest.FirstMidName,
-                EnrollmentDate = DateTime.Now 
+                EnrollmentDate = dateTimeToSave
             };
 
             await _context.Student.AddAsync(student);
