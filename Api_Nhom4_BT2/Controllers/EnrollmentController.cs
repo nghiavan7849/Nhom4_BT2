@@ -61,7 +61,7 @@ namespace Api_Nhom4_BT2.Controllers
                 return NotFound(result);
             }
             // return Ok();
-            return NoContent();
+            return Ok(result);
         }
     }
 }
