@@ -55,6 +55,7 @@ namespace Api_Nhom4_BT2.Services
             // Chỉ cập nhật các trường LastName và FirstMidName
             existingStudent.LastName = updateStudentRequest.LastName;
             existingStudent.FirstMidName = updateStudentRequest.FirstMidName;
+            existingStudent.EnrollmentDate = existingStudent.EnrollmentDate;
 
             _context.SaveChanges();
 
