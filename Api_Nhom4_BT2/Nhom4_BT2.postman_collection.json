@@ -60,7 +60,48 @@
 									"pm.test(\"Successful POST request\", function () {",
 									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
 									"});",
-									""
+									"",
+									"var template = `",
+									"<canvas id=\"myChart\" height=\"75\"></canvas>",
+									"",
+									"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"></script> ",
+									"",
+									"<script>",
+									"    var ctx = document.getElementById(\"myChart\");",
+									"",
+									"    var myChart = new Chart(ctx, {",
+									"        type: \"pie\",",
+									"        data: {",
+									"            labels: [\"Last Name\", \"First Middle Name\", \"Enrollment Date\"],",
+									"            datasets: [{",
+									"                data: [{{response.data.lastName.length}}, {{response.data.firstMidName.length}}, {{response.data.enrollmentDate.length}}],",
+									"                ",
+									"                // Change these colours to customize the chart",
+									"                backgroundColor: [\"#003f5c\", \"#58508d\", \"#bc5090\"],",
+									"            }]",
+									"        },",
+									"        options: {",
+									"            title: {",
+									"                display: true,",
+									"                text: 'Student Information'",
+									"            }",
+									"        }",
+									"    });",
+									"",
+									"    // Access the data passed to pm.visualizer.set() from the JavaScript",
+									"    // code of the Visualizer template",
+									"    pm.getData(function (err, value) {",
+									"        myChart.data.datasets[0].data = [value.response.data.lastName.length, value.response.data.firstMidName.length, value.response.data.enrollmentDate.length];",
+									"        myChart.update();",
+									"    });",
+									"",
+									"</script>`;",
+									"",
+									"function constructVisualizerPayload() {",
+									"    return { response: pm.response.json() }",
+									"}",
+									"",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -72,7 +113,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    // \"id\": 10,\n    \"lastName\": \"123\",\n    \"firstMidName\": \"le12\"\n    // \"enrollmentDate\": \"2023-02-08T17:00:00Z\"\n}",
+							"raw": "{\n    // \"id\": 10,\n    \"lastName\": \"2\",\n    \"firstMidName\": \"2\",\n    \"enrollmentDate\": \"2023-02-08T17:00:00Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -115,7 +156,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    // \"id\": 14,\n    \"lastName\": \"123\",\n    \"firstMidName\": \"le12\",\n    \"enrollmentDate\": \"2023-02-08T17:00:00Z\"\n}",
+							"raw": "{\n    // \"id\": 14,\n    \"lastName\": \"123\",\n    \"firstMidName\": \"kiên\"\n    // \"enrollmentDate\": \"2023-02-08T17:00:00Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -123,14 +164,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/student/16",
+							"raw": "{{base_url}}/api/student/34",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"student",
-								"16"
+								"34"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -169,14 +210,14 @@
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}/api/student/166",
+							"raw": "{{base_url}}/api/student/27",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"student",
-								"166"
+								"27"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -243,7 +284,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "        {\n            // \"enrollmentID\": 1,\n            \"courseID\": 12,\n            \"studentID\": 1,\n            \"grade\": \"A\"\n            // \"course\": 1,\n            // \"student\": 1\n        }      \n      \n      \n        // {\n        //     \"enrollmentID\": 1,\n        //     \"courseID\": 1,\n        //     \"studentID\": 1,\n        //     \"grade\": \"A\",\n        //     \"course\": {\n        //         \"courseID\": 1,\n        //         \"title\": \"Introduction to Computer Science\",\n        //         \"credits\": 3\n        //     },\n        //     \"student\": {\n        //         \"id\": 1,\n        //         \"lastName\": \"Nguyen\",\n        //         \"firstMidName\": \"An\",\n        //         \"enrollmentDate\": \"2023-08-09T17:00:00Z\"\n        //     }\n        // }",
+							"raw": "        {\n            // \"enrollmentID\": 1,\n            \"courseID\": 122,\n            \"studentID\": 1323,\n            \"grade\": \"\"\n            // \"course\": 1,\n            // \"student\": 1\n        }      \n        // {\n        //     \"enrollmentID\": 1,\n        //     \"courseID\": 1,\n        //     \"studentID\": 1,\n        //     \"grade\": \"A\",\n        //     \"course\": {\n        //         \"courseID\": 1,\n        //         \"title\": \"Introduction to Computer Science\",\n        //         \"credits\": 3\n        //     },\n        //     \"student\": {\n        //         \"id\": 1,\n        //         \"lastName\": \"Nguyen\",\n        //         \"firstMidName\": \"An\",\n        //         \"enrollmentDate\": \"2023-08-09T17:00:00Z\"\n        //     }\n        // }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -286,7 +327,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t//   \"enrollmentID\": 11,\n        \"courseID\": 1,\n        \"studentID\": 1,\n        \"grade\": \"b\"\n}",
+							"raw": "{\n\t//   \"enrollmentID\": 11,\n        \"courseID\": 12,\n        \"studentID\": 12,\n        \"grade\": \"b\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -294,14 +335,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/enrollment/10",
+							"raw": "{{base_url}}/api/enrollment/15",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"enrollment",
-								"10"
+								"15"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -412,7 +453,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    // \"courseID\": 9,\n    \"title\": \"Web Development\",\n    \"credits\": 3\n}",
+							"raw": "{\n    // \"courseID\": 9,\n    \"title\": \"34\",\n    \"credits\": \"123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -455,7 +496,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+							"raw": "{\n    // \"courseID\": 9,\n    \"title\": \"\",\n    \"credits\": \"1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -463,19 +504,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/course?id=1",
+							"raw": "{{base_url}}/api/course/25",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
-								"course"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"course",
+								"25"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -512,19 +548,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/course?id=1",
+							"raw": "{{base_url}}/api/course/14",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
-								"course"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
+								"course",
+								"14"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
