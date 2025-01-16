@@ -38,6 +38,12 @@ namespace Api_Nhom4_BT2.Services
                        .WithDescription("Please fill in the information completely");
                 }
 
+                if (enrollmentRespone.Grade.Length > 50)
+                {
+                    return ApiResponse<Enrollment>.fail(null)
+                       .WithDescription("Grade length does not exceed 50 characters");
+                }
+
                 var course = await dbContext.Course.FindAsync(enrollmentRespone.CourseID);
                 var student = await dbContext.Student.FindAsync(enrollmentRespone.StudentID);
                 var enrollment = new Enrollment();
@@ -70,12 +76,19 @@ namespace Api_Nhom4_BT2.Services
         {
             try
             {
+
                 if (enrollmentRespone.Grade == null ||
                     string.IsNullOrWhiteSpace(enrollmentRespone.Grade)
                     )
                 {
                     return ApiResponse<Enrollment>.fail(null)
                        .WithDescription("Please fill in the information completely");
+                }
+
+                if (enrollmentRespone.Grade.Length > 50)
+                {
+                    return ApiResponse<Enrollment>.fail(null)
+                       .WithDescription("Grade length does not exceed 50 characters");
                 }
 
                 var existingEnrollment = await dbContext.Enrollment.FirstOrDefaultAsync(enrollment => enrollment.EnrollmentID == id);
