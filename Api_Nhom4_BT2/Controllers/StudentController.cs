@@ -50,7 +50,6 @@ namespace Api_Nhom4_BT2.Controllers
             return NotFound(response);
         }
 
-
         [HttpDelete("{id}")]
         public IActionResult DeleteStudent(int id)
         {
