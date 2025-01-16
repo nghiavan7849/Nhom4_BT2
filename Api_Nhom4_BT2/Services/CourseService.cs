@@ -21,24 +21,46 @@ namespace Api_Nhom4_BT2.Services
             return listCourse;
         }
 
-        public async Task<Course> AddCourse(Course course)
+        public async Task<ApiResponse<Course>> AddCourse(CourseRequest courseRequest)
         {
+            if (string.IsNullOrEmpty(courseRequest.Title))
+            {
+                return ApiResponse<Course>.fail("The Title field is required.");
+            }
+            if (!courseRequest.Credits.HasValue)
+            {
+                return ApiResponse<Course>.fail("The Credits field is required.");
+            } else if (courseRequest.Credits < 0)
+            {
+                return ApiResponse<Course>.fail("The Credit field must be greater than 0.");
+            }
+
+            Course course = new Course();
+            course.Title = courseRequest.Title;
+            if(courseRequest.Credits.HasValue)
+                course.Credits = courseRequest.Credits.Value;
+
             await _context.Course.AddAsync(course);
             await _context.SaveChangesAsync();
 
-            return course;
+
+            return ApiResponse<Course>.success(course);
         }
 
-        public ApiResponse<Course> UpdateCourse(int id, Course updateCourse)
+        public ApiResponse<Course> UpdateCourse(int id, CourseRequest updateCourse)
         {
             var existingCourse = _context.Course.FirstOrDefault(course => course.CourseID == id);
             if (existingCourse == null) 
             {
                 return ApiResponse<Course>.fail("Course not found");
             }
-
+            if (updateCourse.Credits < 0)
+            {
+                return ApiResponse<Course>.fail("The Credit field must be greater than 0.");
+            }
             existingCourse.Title = updateCourse.Title;
-            existingCourse.Credits = updateCourse.Credits;
+            if (updateCourse.Credits.HasValue)
+                existingCourse.Credits = updateCourse.Credits.Value;
 
             _context.SaveChanges();
 
