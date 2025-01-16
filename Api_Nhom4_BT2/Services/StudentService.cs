@@ -20,12 +20,12 @@ namespace Api_Nhom4_BT2.Services
             var listStudent = await _context.Student.ToListAsync();
             return listStudent;
         }
-        public async Task<Student> AddStudent(StudentRequest studentRequest)
+        public async Task<ApiResponse<Student>> AddStudent(StudentRequest studentRequest)
         {
-
-            if (studentRequest.LastName.Length > 100 || studentRequest.FirstMidName.Length > 100)
+            if (string.IsNullOrWhiteSpace(studentRequest.LastName) || studentRequest.LastName.Length > 100 ||
+            string.IsNullOrWhiteSpace(studentRequest.FirstMidName) || studentRequest.FirstMidName.Length > 100)
             {
-                throw new ArgumentException("LastName or FirstMidName must not exceed 100 characters.");
+                return ApiResponse<Student>.fail("LastName and FirstMidName must not exceed 100 characters and cannot be empty or whitespace.");
             }
 
             DateTime utcNow = DateTime.UtcNow;
@@ -38,8 +38,6 @@ namespace Api_Nhom4_BT2.Services
             // Đảm bảo giá trị lưu vào PostgreSQL luôn ở UTC
             DateTime dateTimeToSave = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
 
-
-
             var student = new Student
             {
                 LastName = studentRequest.LastName,
@@ -49,14 +47,15 @@ namespace Api_Nhom4_BT2.Services
 
             await _context.Student.AddAsync(student);
             await _context.SaveChangesAsync();
-            return student;
+            return ApiResponse<Student>.success(student);
         }
 
         public ApiResponse<Student> UpdateStudent(int id, StudentRequest updateStudentRequest)
         {
-            if (updateStudentRequest.LastName.Length > 100 || updateStudentRequest.FirstMidName.Length > 100)
+            if (string.IsNullOrWhiteSpace(updateStudentRequest.LastName) || updateStudentRequest.LastName.Length > 100 ||
+           string.IsNullOrWhiteSpace(updateStudentRequest.FirstMidName) || updateStudentRequest.FirstMidName.Length > 100)
             {
-                return ApiResponse<Student>.fail("LastName or FirstMidName must not exceed 100 characters.");
+                return ApiResponse<Student>.fail("LastName and FirstMidName must not exceed 100 characters and cannot be empty or whitespace.");
             }
 
             var existingStudent = _context.Student.FirstOrDefault(student => student.ID == id);

@@ -24,23 +24,17 @@ namespace Api_Nhom4_BT2.Controllers
         [HttpPost]
         public async Task<IActionResult> AddStudent([FromBody] StudentRequest studentRequest)
         {
-            if (!ModelState.IsValid)
+            var response = await _studentService.AddStudent(studentRequest);
+            if(response.code == 1)
             {
-                return BadRequest(ApiResponse<string>.fail("Invalid data"));
+                return BadRequest(response);
             }
-
-            var newStudent = await _studentService.AddStudent(studentRequest);
-            return Created("", ApiResponse<Student>.success(newStudent));
+            return Created("", response);
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateStudent(int id, [FromBody] StudentRequest updateStudentRequest)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ApiResponse<string>.fail("Invalid data"));
-            }
-
             var response = _studentService.UpdateStudent(id, updateStudentRequest);
 
             if (response.code == 0)
