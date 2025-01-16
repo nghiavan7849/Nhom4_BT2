@@ -66,7 +66,14 @@ namespace Api_Nhom4_BT2.Services
                 }
 
             }
-            if (updateCourse.Credits < 0)
+            if (string.IsNullOrEmpty(updateCourse?.Title))
+            {
+                return ApiResponse<Course>.fail("The Title field is required.");
+            }
+            if (!updateCourse.Credits.HasValue)
+            {
+                return ApiResponse<Course>.fail("The Credits field is required.");
+            } else if(updateCourse.Credits < 0)
             {
                 return ApiResponse<Course>.fail("The Credit field must be greater than 0.");
             }
