@@ -24,7 +24,15 @@ namespace Api_Nhom4_BT2.Services
 
         public async Task<ApiResponse<Course>> AddCourse(CourseRequest courseRequest)
         {
-            if (string.IsNullOrEmpty(courseRequest.Title))
+            if(courseRequest == null)
+            {
+                if(courseRequest?.Credits == null)
+                {
+                    return ApiResponse<Course>.fail("The credits field must be numeric.");
+                }
+                
+            }
+            if (string.IsNullOrEmpty(courseRequest?.Title))
             {
                 return ApiResponse<Course>.fail("The Title field is required.");
             }
@@ -50,15 +58,24 @@ namespace Api_Nhom4_BT2.Services
 
         public ApiResponse<Course> UpdateCourse(int id, CourseRequest updateCourse)
         {
-            var existingCourse = _context.Course.FirstOrDefault(course => course.CourseID == id);
-            if (existingCourse == null) 
+            if (updateCourse == null)
             {
-                return ApiResponse<Course>.fail("Course not found");
+                if (updateCourse?.Credits == null)
+                {
+                    return ApiResponse<Course>.fail("The credits field must be numeric.");
+                }
+
             }
             if (updateCourse.Credits < 0)
             {
                 return ApiResponse<Course>.fail("The Credit field must be greater than 0.");
             }
+            var existingCourse = _context.Course.FirstOrDefault(course => course.CourseID == id);
+            if (existingCourse == null) 
+            {
+                return ApiResponse<Course>.fail("Course not found");
+            }
+            
             existingCourse.Title = updateCourse.Title;
             if (updateCourse.Credits.HasValue)
                 existingCourse.Credits = updateCourse.Credits.Value;
