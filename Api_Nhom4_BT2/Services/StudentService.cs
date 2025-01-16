@@ -25,7 +25,7 @@ namespace Api_Nhom4_BT2.Services
             {
                 LastName = studentRequest.LastName,
                 FirstMidName = studentRequest.FirstMidName,
-                EnrollmentDate = studentRequest.EnrollmentDate
+                EnrollmentDate = DateTime.Now 
             };
 
             await _context.Student.AddAsync(student);
@@ -41,9 +41,9 @@ namespace Api_Nhom4_BT2.Services
                 return ApiResponse<Student>.fail("Student not found");
             }
 
+            // Chỉ cập nhật các trường LastName và FirstMidName
             existingStudent.LastName = updateStudentRequest.LastName;
             existingStudent.FirstMidName = updateStudentRequest.FirstMidName;
-            existingStudent.EnrollmentDate = updateStudentRequest.EnrollmentDate;
 
             _context.SaveChanges();
 
