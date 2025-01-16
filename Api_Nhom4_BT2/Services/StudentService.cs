@@ -21,6 +21,12 @@ namespace Api_Nhom4_BT2.Services
         }
         public async Task<Student> AddStudent(StudentRequest studentRequest)
         {
+
+            if (studentRequest.LastName.Length > 100 || studentRequest.FirstMidName.Length > 100)
+            {
+                throw new ArgumentException("LastName or FirstMidName must not exceed 100 characters.");
+            }
+
             DateTime utcNow = DateTime.UtcNow;
 
             TimeZoneInfo hcmTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Asia/Ho_Chi_Minh");
@@ -30,6 +36,7 @@ namespace Api_Nhom4_BT2.Services
 
             // Đảm bảo giá trị lưu vào PostgreSQL luôn ở UTC
             DateTime dateTimeToSave = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+
 
 
             var student = new Student
@@ -46,13 +53,17 @@ namespace Api_Nhom4_BT2.Services
 
         public ApiResponse<Student> UpdateStudent(int id, StudentRequest updateStudentRequest)
         {
+            if (updateStudentRequest.LastName.Length > 100 || updateStudentRequest.FirstMidName.Length > 100)
+            {
+                return ApiResponse<Student>.fail("LastName or FirstMidName must not exceed 100 characters.");
+            }
+
             var existingStudent = _context.Student.FirstOrDefault(student => student.ID == id);
             if (existingStudent == null)
             {
                 return ApiResponse<Student>.fail("Student not found");
             }
 
-            // Chỉ cập nhật các trường LastName và FirstMidName
             existingStudent.LastName = updateStudentRequest.LastName;
             existingStudent.FirstMidName = updateStudentRequest.FirstMidName;
             existingStudent.EnrollmentDate = existingStudent.EnrollmentDate;
