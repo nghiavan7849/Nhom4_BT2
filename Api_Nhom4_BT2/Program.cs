@@ -3,6 +3,7 @@ using Api_Nhom4_BT2.Models;
 using Api_Nhom4_BT2.DBContext;
 using Api_Nhom4_BT2.Services;
 using DotNetEnv;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<StudentService>();
 builder.Services.AddScoped<EnrollmentService>();
+
+builder.Services.Configure<ApiBehaviorOptions>(options=>options.SuppressModelStateInvalidFilter=true);
 
 var app = builder.Build();
 
