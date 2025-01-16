@@ -561,7 +561,7 @@
 		},
 		{
 			"key": "base_url",
-			"value": "https://postman-rest-api-learner.glitch.me/"
+			"value": "https://api.fivefood.shop"
 		}
 	]
 }
